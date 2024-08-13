@@ -1,0 +1,43 @@
+name: SharePlate
+settings:
+  MARKETING_VERSION: "1.0"
+  CURRENT_PROJECT_VERSION: 1
+options:
+  bundleIdPrefix: com.example
+packages:
+  netfox:
+    url: https://github.com/kasketis/netfox.git
+    from: 1.21.0
+targets:
+  SharePlate:
+    type: application
+    platform: iOS
+    sources: [SharePlate]
+    resources: [Resources]
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.example.SharePlate
+      INFOPLIST_FILE: SharePlate/Info.plist
+    dependencies:
+        - package: netfox
+  SharePlateTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [SharePlateTests]
+    dependencies:
+      - target: SharePlate
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.example.SharePlateTests
+      INFOPLIST_FILE: SharePlateTests/Info.plist
+      base:
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/SharePlate.app/SharePlate"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+schemes:
+  SharePlate:
+    build:
+      targets:
+        SharePlate: all
+        SharePlateTests: all
+    test:
+      targets:
+      - name: SharePlateTests
+      gatherCoverageData: true
