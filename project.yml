@@ -8,6 +8,9 @@ packages:
   netfox:
     url: https://github.com/kasketis/netfox.git
     from: 1.21.0
+  firebase:
+    url: https://github.com/firebase/firebase-ios-sdk.git
+    from: 10.28.0
 targets:
   SharePlate:
     type: application
