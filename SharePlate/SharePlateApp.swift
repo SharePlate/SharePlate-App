@@ -33,7 +33,7 @@ struct SharePlateApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainPageView()
                 .environmentObject(authManager)
         }
     }
