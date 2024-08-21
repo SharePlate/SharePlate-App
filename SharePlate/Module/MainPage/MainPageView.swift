@@ -173,7 +173,7 @@ struct MainPageView: View {
                     Spacer()
                     
                         NavigationLink {
-//                            TestProduct()
+                            DonateView()
                         } label: {
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(Color("Orange30"))
