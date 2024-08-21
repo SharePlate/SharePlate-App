@@ -7,7 +7,7 @@ struct MainPageView: View {
     
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack{
                 VStack {
                     ZStack(alignment: .top){
@@ -15,14 +15,6 @@ struct MainPageView: View {
                         Image("TopBar-design2")
                         Image("TopBar-design3")
                     }
-// <<<<<<< profile
-//                     HStack {
-//                         Circle()
-//                             .frame(width: 54, height: 54)
-//                             .onTapGesture {
-//                                 goToProfile.toggle()
-//                             }
-// =======
                     .ignoresSafeArea(.all)
                     Spacer()
                 }
@@ -45,12 +37,13 @@ struct MainPageView: View {
                             }
                             
                             
-                            VStack (alignment: .leading, spacing: 2){
+                            VStack (alignment: .leading, spacing: 2) {
                                 Text("Hello ") .font(.system(size: 17))
                                 +
                                 Text(isLoggedIn ? "Ages" : "Guest")
                                     .font(.system(size: 20))
                                     .bold()
+                                    
                                 
                                 ZStack{
                                     Text("Complete your profile to play a role in changing Indonesia")
@@ -70,6 +63,9 @@ struct MainPageView: View {
                                     )
                                 )
                                 .clipShape(RoundedRectangle(cornerRadius: 4))
+                            }
+                            .onTapGesture {
+                                goToProfile.toggle()
                             }
                         }
                         .padding(.bottom, 30)

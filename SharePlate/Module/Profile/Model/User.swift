@@ -28,6 +28,7 @@ final class UserModel {
         self.phoneNumber = phoneNumber
         self.profilePicture = profilePicture
     }
+    
 }
 
 

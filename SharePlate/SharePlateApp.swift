@@ -7,6 +7,7 @@
 import netfox
 import SwiftUI
 import FirebaseCore
+import SwiftData
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
@@ -23,6 +24,20 @@ struct SharePlateApp: App {
     
     @StateObject var authManager: AuthManager
     
+    var sharedModelContainer: ModelContainer = {
+            let schema = Schema([
+                UserModel.self,
+            ])
+            let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+            do {
+                return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            } catch {
+                fatalError("Could not create ModelContainer: \(error)")
+            }
+        }()
+
+    
     init() {
         // Use Firebase library to configure APIs
         FirebaseApp.configure()
@@ -37,6 +52,7 @@ struct SharePlateApp: App {
                 MainPageView()
                     .environmentObject(authManager)
             }
+            .modelContainer(sharedModelContainer)
         }
     }
 }
