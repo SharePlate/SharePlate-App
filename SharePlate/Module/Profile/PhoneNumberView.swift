@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct PhoneNumberView: View {
     var phoneNumber: String
     @Binding var editingNumber: Bool
@@ -27,7 +28,7 @@ struct PhoneNumberView: View {
             }
         }
         .padding()
-        .background(.thickMaterial)
+        .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 14))
     }
 }

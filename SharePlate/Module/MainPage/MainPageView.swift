@@ -3,6 +3,8 @@ import SwiftUI
 struct MainPageView: View {
     @State private var name: String = "Ages"
     @State private var isLoggedIn: Bool = true
+    @State private var goToProfile: Bool = false
+    
     
     var body: some View {
         
@@ -29,6 +31,9 @@ struct MainPageView: View {
                     HStack {
                         Circle()
                             .frame(width: 54, height: 54)
+                            .onTapGesture {
+                                goToProfile.toggle()
+                            }
                         
                         VStack (alignment: .leading, spacing: 2){
                             Text("Hello ") .font(.system(size: 17))
@@ -176,6 +181,9 @@ struct MainPageView: View {
                     .padding(.bottom, 20)
             }
             .padding(.horizontal, 20)
+        }
+        .navigationDestination(isPresented: $goToProfile) {
+            ProfileView()
         }
     }
 }

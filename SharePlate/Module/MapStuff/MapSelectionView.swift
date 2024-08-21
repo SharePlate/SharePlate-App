@@ -40,6 +40,7 @@ struct MapSelectionView: View {
                     }) {
                         Image(systemName: "magnifyingglass")
                             .padding()
+                            .foregroundStyle(.purple)
                     }
                 }
                 .background(.thinMaterial)
@@ -89,7 +90,7 @@ struct MapSelectionView: View {
                 
                 Spacer()
                 HStack {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 10) {
                         Text("Your Current Location:").bold()
                         Text(currentAddress)
                         
@@ -109,8 +110,8 @@ struct MapSelectionView: View {
                                 
                             }
                             .padding()
-                            .foregroundStyle(.white)
-                            .background(.blue)
+                            .foregroundStyle(.black)
+                            .background(.green)
                             .clipShape(Capsule())
                         }
                         
@@ -127,7 +128,7 @@ struct MapSelectionView: View {
                                 
                             }
                             .padding()
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(.black)
                             .background(.white)
                             .clipShape(Capsule())
                         }
@@ -146,6 +147,7 @@ struct MapSelectionView: View {
             }
             .padding()
         }
+        .navigationTitle("Pin Location")
     }
     
     func performSearch() {

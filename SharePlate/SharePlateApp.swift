@@ -33,8 +33,10 @@ struct SharePlateApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainPageView()
-                .environmentObject(authManager)
+            NavigationStack{
+                MainPageView()
+                    .environmentObject(authManager)
+            }
         }
     }
 }

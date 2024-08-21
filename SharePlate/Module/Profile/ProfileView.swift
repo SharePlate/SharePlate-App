@@ -13,6 +13,7 @@ struct ProfileView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State private var goToAddressList: Bool = false
 
     var body: some View {
         VStack {
@@ -23,9 +24,21 @@ struct ProfileView: View {
                     PhoneNumberView(phoneNumber: viewModel.mockData.phoneNumber, editingNumber: $viewModel.editingNumber)
                         .padding(.top)
                     
-                    AddressDetailView(editingAddressDetail: $viewModel.editingAddressDetail, goToMap: $viewModel.goToMap)
-                        .padding(.top)
+                    
+                    
+                    if((UserDefaults.standard.string(forKey: "AddressAddress")?.isEmpty) != nil){
+                        AddressDetailView(editingAddressDetail: $viewModel.editingAddressDetail, goToAddressList: $goToAddressList, goToMap: $viewModel.goToMap)
+                            .padding(.top)
+                    }else{
+                        
+                        AddAddressButton(goToAddressList: $goToAddressList)
+                            .padding(.top)
+                    }
+                    
+                    
                 }
+            }.navigationDestination(isPresented: $goToAddressList){
+                AddressListView()
             }
             
             Spacer()
@@ -39,8 +52,8 @@ struct ProfileView: View {
                     Spacer()
                 }
                 .padding()
-                .foregroundStyle(.white)
-                .background(Color(.blue))
+                .foregroundStyle(.black)
+                .background(.orange)
                 .clipShape(RoundedRectangle(cornerRadius: 14))
             }
             
@@ -48,14 +61,19 @@ struct ProfileView: View {
                 viewModel.deleteAccountConfirmation = true
             } label: {
                 Text("Delete Account")
-                    .foregroundStyle(.red)
+                    .foregroundStyle(.orange)
             }
-            .padding(.bottom)
-            .navigationDestination(isPresented: $viewModel.goToMap) {
-                MapSelectionView()
+            .padding(.vertical)
+//            .navigationDestination(isPresented: $viewModel.goToMap) {
+//                MapSelectionView()
+//            }
+            .navigationDestination(isPresented: $viewModel.editingAddressDetail) {
+                AddressListView()
             }
         }
         .padding(.horizontal)
+        .background(.thinMaterial)
+        
         
         .alert("Edit phone number", isPresented: $viewModel.editingNumber) {
             TextField("08xxx", text: $viewModel.phone).keyboardType(.numberPad)
@@ -67,15 +85,6 @@ struct ProfileView: View {
             Text("Enter your new phone number here")
         }
         
-        .alert("Edit address detail", isPresented: $viewModel.editingAddressDetail) {
-            TextField("House no...", text: $viewModel.address)
-            Button("Save") {
-                viewModel.saveAddressDetail()
-            }
-            Button("Cancel", role: .cancel) { }
-        } message: {
-            Text("Enter your new address detail here")
-        }
         
         .confirmationDialog("Sign Out", isPresented: $viewModel.signOutConfirmation) {
             Button("Sign Out") {
@@ -94,5 +103,9 @@ struct ProfileView: View {
         } message: {
             Text("Are you sure want to delete your account?")
         }
+        
     }
 }
+
+
+
