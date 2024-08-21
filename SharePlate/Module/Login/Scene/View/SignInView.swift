@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 class SignInView: UIView {
     
@@ -29,13 +30,8 @@ class SignInView: UIView {
         titleLabel.textColor = UIColor(red: 0.28, green: 0.30, blue: 0.30, alpha: 1.00)
         
         // Sign In with Apple button
-        let signInButton = UIButton(type: .system)
-        signInButton.setTitle("Sign in with Apple ID", for: .normal)
-        signInButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        signInButton.backgroundColor = .black
-        signInButton.setTitleColor(.white, for: .normal)
-        signInButton.layer.cornerRadius = 8
-        signInButton.layer.masksToBounds = true
+        let signInButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+        signInButton.addTarget(self, action: #selector(handleAppleSignInButtonPress), for: .touchUpInside)
         
         // Set constraints and layout
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -57,5 +53,37 @@ class SignInView: UIView {
             signInButton.heightAnchor.constraint(equalToConstant: 44),
             signInButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
         ])
+    }
+    
+    @objc
+    private func handleAppleSignInButtonPress() {
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+}
+
+// MARK: - ASAuthorizationControllerDelegate
+extension SignInView: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            // Handle successful sign in here
+            // You can access the user's full name and email if available
+        }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // Handle error here
+    }
+}
+
+// MARK: - ASAuthorizationControllerPresentationContextProviding
+extension SignInView: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.window!
     }
 }
