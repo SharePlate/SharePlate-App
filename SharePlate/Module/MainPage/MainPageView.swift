@@ -173,7 +173,7 @@ struct MainPageView: View {
                     Spacer()
                     
                         NavigationLink {
-                            //ContentView()
+//                            TestProduct()
                         } label: {
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(Color("Orange30"))
@@ -188,7 +188,6 @@ struct MainPageView: View {
                 }
                 .padding(.horizontal, 20)
             }
-
         }
         .navigationDestination(isPresented: $goToProfile) {
             ProfileView()
