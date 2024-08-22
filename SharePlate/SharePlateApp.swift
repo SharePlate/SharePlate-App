@@ -23,7 +23,7 @@ struct SharePlateApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     @StateObject var authManager: AuthManager
-    
+
     var sharedModelContainer: ModelContainer = {
             let schema = Schema([
                 UserModel.self,
@@ -48,7 +48,7 @@ struct SharePlateApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack{
+            NavigationStack() {
                 MainPageView()
                     .environmentObject(authManager)
             }

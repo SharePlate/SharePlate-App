@@ -192,6 +192,7 @@ struct MainPageView: View {
         .navigationDestination(isPresented: $goToProfile) {
             ProfileView()
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

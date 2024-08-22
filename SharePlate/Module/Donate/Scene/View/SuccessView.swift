@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SuccessView: View {
+    @State private var gotoHome: Bool = false
+
     var body: some View {
         VStack {
             Image("complete") // Replace with your actual image name
@@ -31,17 +33,21 @@ struct SuccessView: View {
                 VStack {
                     Button(action: {
                     // TODO
+                        gotoHome = true
                     }) {
                         Text("Back to home")
                             .foregroundColor(Color("Neutral10"))
                             .fontWeight(.bold)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color("Green70"))
+                            .background(Color("Green80"))
                             .cornerRadius(10)
                     }
                     .frame(height: 292)
                     .padding(.horizontal, 20)
+                    .navigationDestination(isPresented: $gotoHome) {
+                        MainPageView()
+                    }
                 }
             }.background(.white)
             Spacer()

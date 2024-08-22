@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 
 struct LoginContentView: View {
+
     var body: some View {
         NavigationView {
             NavigationLink {

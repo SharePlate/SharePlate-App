@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductItemView: View {
     var product: DonatesModel
-    
+
     var body: some View {
         VStack {
             VStack {
@@ -36,6 +36,7 @@ struct ProductItemView: View {
 struct DonateView: View {
     @StateObject var viewModel = ProductViewModel()
     @StateObject var vmDonate = DonatesViewModel()
+    @State private var gotoDetail: Bool = false
 
     var numbers = 1...10
     
@@ -43,7 +44,7 @@ struct DonateView: View {
         NavigationView {
             VStack {
                 Form {
-                    Section(header: Text("Details")) {
+                    Section() {
                         ForEach(viewModel.products) { product in
                             ProductItemView(product: product)
                                 .onAppear() {
@@ -57,6 +58,8 @@ struct DonateView: View {
                     
                     Section() {
                         Text("Name")
+                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+
                         TextField("Example: Chitato", text: $viewModel.newProductName)
                             .frame(height: 28)
                             .background(.thickMaterial)
@@ -68,6 +71,8 @@ struct DonateView: View {
                                     Text("\($0)")
                             }
                         }
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+
 
                                 
                         Picker("", selection: $viewModel.newProductIsHalal) {
@@ -82,7 +87,9 @@ struct DonateView: View {
                             HStack {
                                 Spacer()
                                 Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(Color("Orange50"))
                                 Text("Add New Item")
+                                    .foregroundColor(.black)
                                 Spacer()
                             }
                         }
@@ -93,6 +100,8 @@ struct DonateView: View {
                     
                     Section() {
                         Text("Notes")
+                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+
                         TextField("Example: Chitato", text: $viewModel.newProductName)
                             .frame(height: 33)
                             .background(.thickMaterial)
@@ -103,25 +112,37 @@ struct DonateView: View {
                 }
                 
                 Spacer()
-                
+            
                 Button(action: {
                     // Action for the Next button
+                    gotoDetail = true
+
                     vmDonate.addItem(donatesModel: viewModel.products)
+                
                 }) {
                     Text("Next")
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.green)
+                        .background(Color("Green80"))
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
+                .navigationDestination(isPresented: $gotoDetail) {
+                    DetailDonateView()
+                }
                 .padding()
             }
+            
         }
-        .navigationBarTitle("Product", displayMode: .inline)
+        .background(Color("Green50"))
+        .navigationBarTitle("Details Product", displayMode: .inline)
+        .toolbarBackground(Color("Green50"), for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
     }
 }
+
 
 struct DonateViewPreview: PreviewProvider {
     static var previews: some View {
